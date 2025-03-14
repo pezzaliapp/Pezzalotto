@@ -6,8 +6,24 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(data => {
         let resultHTML = "<h2>Analisi Statistica dei Numeri</h2>";
         
+        // Nuovi nomi delle città internazionali
+        const cittaMappate = {
+            "Bari": "New York",
+            "Cagliari": "Tokyo",
+            "Firenze": "Sydney",
+            "Genova": "Londra",
+            "Milano": "Parigi",
+            "Napoli": "Berlino",
+            "Palermo": "Toronto",
+            "Roma": "Dubai",
+            "Torino": "San Francisco",
+            "Venezia": "Singapore",
+            "Nazionale": "Hong Kong"
+        };
+
         Object.keys(data).forEach(citta => {
-            resultHTML += `<h3>${citta}</h3>`;
+            let cittaNuova = cittaMappate[citta] || citta; // Sostituisce il nome se presente nella mappa
+            resultHTML += `<h3>${cittaNuova}</h3>`;
             resultHTML += "<table border='1'><tr><th>Numero</th><th>Probabilità</th></tr>";
             
             let sortedNumbers = Object.entries(data[citta])
@@ -28,11 +44,12 @@ document.addEventListener("DOMContentLoaded", () => {
         let suggestedNumbers = [];
         
         Object.keys(data).forEach(citta => {
+            let cittaNuova = cittaMappate[citta] || citta;
             let topNumbers = Object.entries(data[citta])
                 .sort((a, b) => b[1] - a[1])
                 .slice(0, 2); // Prendiamo i 2 numeri più frequenti per ogni città
             
-            suggestedNumbers.push({ citta, numeri: topNumbers.map(n => n[0]) });
+            suggestedNumbers.push({ citta: cittaNuova, numeri: topNumbers.map(n => n[0]) });
         });
         
         let suggestionHTML = "<h2>Distribuzione Numerica per " + today + "</h2><ul>";
