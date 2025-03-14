@@ -35,17 +35,17 @@ document.addEventListener("DOMContentLoaded", () => {
             suggestedNumbers.push({ ruota, numeri: topNumbers.map(n => n[0]) });
         });
         
-        let suggestionHTML = "<h2>Numeri consigliati da giocare per " + today + "</h2><ul>";
+        let suggestionHTML = "<h2>Analisi Numerica per " + today + "</h2><ul>";
         suggestedNumbers.forEach(suggestion => {
             suggestionHTML += `<li><strong>${suggestion.ruota}:</strong> ${suggestion.numeri.join(", ")}</li>`;
         });
         suggestionHTML += "</ul>";
         
-        // Messaggio di avviso
-        let disclaimer = "<p><strong>Nota:</strong> Questo programma è basato sui dati storici delle estrazioni del Lotto dal 1939 ad oggi. Il suo scopo è puramente formativo e dimostrativo, legato all'analisi dei dati e alla programmazione di algoritmi probabilistici. Non vi è alcuna garanzia di vincita, e l'autore non è responsabile per eventuali perdite derivanti dall'uso di questo software.</p>";
+        // Messaggio informativo
+        let disclaimer = "<p><strong>Nota:</strong> Questo programma utilizza dati statistici e algoritmi matematici per analizzare la distribuzione dei numeri nelle estrazioni passate. L'obiettivo è dimostrare l'applicazione del calcolo delle probabilità nell'analisi dei dati.</p>";
         
         // Pulsante per esportare i risultati in TXT via WhatsApp
-        let exportButton = `<button onclick="sendWhatsApp()">Invia risultati via WhatsApp</button>`;
+        let exportButton = `<button onclick="sendWhatsApp()">Invia analisi via WhatsApp</button>`;
         
         document.getElementById("results").innerHTML += suggestionHTML + disclaimer + exportButton;
     })
@@ -57,11 +57,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Funzione per generare il testo e inviarlo via WhatsApp
 function sendWhatsApp() {
-    let text = "Numeri consigliati da giocare oggi:\n";
+    let text = "Analisi Numerica di oggi:\n";
     document.querySelectorAll("ul li").forEach(li => {
         text += li.innerText + "\n";
     });
-    text += "\nNota: Questo programma è a solo scopo formativo e non garantisce vincite.";
+    text += "\nNota: Questa analisi è basata su dati statistici e algoritmi matematici.";
     
     let url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank");
