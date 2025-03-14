@@ -4,11 +4,19 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch("probability-data.json")
     .then(response => response.json())
     .then(data => {
-        let resultHTML = "<h2>Probabilità per Ruota</h2><ul>";
+        let resultHTML = "<h2>Probabilità per Ruota</h2>";
+        
         Object.keys(data).forEach(ruota => {
-            resultHTML += `<li><strong>${ruota}:</strong> ${JSON.stringify(data[ruota])}</li>`;
+            resultHTML += `<h3>${ruota}</h3>`;
+            resultHTML += "<table border='1'><tr><th>Numero</th><th>Probabilità</th></tr>";
+            
+            Object.keys(data[ruota]).forEach(numero => {
+                resultHTML += `<tr><td>${numero}</td><td>${(data[ruota][numero] * 100).toFixed(2)}%</td></tr>`;
+            });
+            
+            resultHTML += "</table><br>";
         });
-        resultHTML += "</ul>";
+        
         document.getElementById("results").innerHTML = resultHTML;
     })
     .catch(error => {
