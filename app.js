@@ -23,26 +23,26 @@ document.addEventListener("DOMContentLoaded", () => {
         
         document.getElementById("results").innerHTML = resultHTML;
         
-        // Suggerire i numeri da giocare sulla base della data attuale
+        // Suggerire i numeri più frequenti sulla base della data attuale
         let today = new Date().toISOString().split("T")[0];
         let suggestedNumbers = [];
         
         Object.keys(data).forEach(ruota => {
             let topNumbers = Object.entries(data[ruota])
                 .sort((a, b) => b[1] - a[1])
-                .slice(0, 2); // Prendiamo i 2 numeri più probabili per ogni ruota
+                .slice(0, 2); // Prendiamo i 2 numeri più frequenti per ogni ruota
             
             suggestedNumbers.push({ ruota, numeri: topNumbers.map(n => n[0]) });
         });
         
-        let suggestionHTML = "<h2>Analisi Numerica per " + today + "</h2><ul>";
+        let suggestionHTML = "<h2>Analisi Matematica per " + today + "</h2><ul>";
         suggestedNumbers.forEach(suggestion => {
             suggestionHTML += `<li><strong>${suggestion.ruota}:</strong> ${suggestion.numeri.join(", ")}</li>`;
         });
         suggestionHTML += "</ul>";
         
-        // Messaggio informativo
-        let disclaimer = "<p><strong>Nota:</strong> Questo programma utilizza dati statistici e algoritmi matematici per analizzare la distribuzione dei numeri nelle estrazioni passate. L'obiettivo è dimostrare l'applicazione del calcolo delle probabilità nell'analisi dei dati.</p>";
+        // Messaggio di tutela e chiarimento
+        let disclaimer = "<p><strong>Nota:</strong> Questo programma utilizza dati statistici e algoritmi matematici per analizzare la distribuzione dei numeri nelle estrazioni passate. Non effettua previsioni né suggerisce scelte. L'obiettivo è esclusivamente didattico e formativo, dimostrando l'applicazione del calcolo delle probabilità nell'analisi dei dati. Qualsiasi interpretazione soggettiva o utilizzo per scopi diversi dall’analisi statistica non è responsabilità dell'autore.</p>";
         
         // Pulsante per esportare i risultati in TXT via WhatsApp
         let exportButton = `<button onclick="sendWhatsApp()">Invia analisi via WhatsApp</button>`;
@@ -57,11 +57,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Funzione per generare il testo e inviarlo via WhatsApp
 function sendWhatsApp() {
-    let text = "Analisi Numerica di oggi:\n";
+    let text = "Analisi Matematica di oggi:\n";
     document.querySelectorAll("ul li").forEach(li => {
         text += li.innerText + "\n";
     });
-    text += "\nNota: Questa analisi è basata su dati statistici e algoritmi matematici.";
+    text += "\nNota: Questa analisi è basata su dati statistici e algoritmi matematici e non rappresenta alcuna previsione.";
     
     let url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank");
