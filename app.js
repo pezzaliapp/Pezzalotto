@@ -41,10 +41,28 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         suggestionHTML += "</ul>";
         
-        document.getElementById("results").innerHTML += suggestionHTML;
+        // Messaggio di avviso
+        let disclaimer = "<p><strong>Nota:</strong> Questo programma è basato sui dati storici delle estrazioni del Lotto dal 1939 ad oggi. Il suo scopo è puramente formativo e dimostrativo, legato all'analisi dei dati e alla programmazione di algoritmi probabilistici. Non vi è alcuna garanzia di vincita, e l'autore non è responsabile per eventuali perdite derivanti dall'uso di questo software.</p>";
+        
+        // Pulsante per esportare i risultati in TXT via WhatsApp
+        let exportButton = `<button onclick="sendWhatsApp()">Invia risultati via WhatsApp</button>`;
+        
+        document.getElementById("results").innerHTML += suggestionHTML + disclaimer + exportButton;
     })
     .catch(error => {
         document.getElementById("results").innerHTML = "<p>Errore nel caricamento dei dati.</p>";
         console.error("Errore nel caricamento dei dati:", error);
     });
 });
+
+// Funzione per generare il testo e inviarlo via WhatsApp
+function sendWhatsApp() {
+    let text = "Numeri consigliati da giocare oggi:\n";
+    document.querySelectorAll("ul li").forEach(li => {
+        text += li.innerText + "\n";
+    });
+    text += "\nNota: Questo programma è a solo scopo formativo e non garantisce vincite.";
+    
+    let url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+    window.open(url, "_blank");
+}
