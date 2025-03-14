@@ -15,5 +15,24 @@
     
     <!-- Pulsante per invio su WhatsApp -->
     <button onclick="sendWhatsApp()">Invia risultati via WhatsApp</button>
+    
+    <!-- Link ai Termini e Condizioni -->
+    <p><a href="#" onclick="showTerms()">Termini e Condizioni</a></p>
+    
+    <!-- Sezione Termini e Condizioni nascosta -->
+    <div id="terms" style="display:none; background:#f8f9fa; padding: 15px; border: 1px solid #ccc; margin-top: 10px;">
+        <h2>Termini e Condizioni</h2>
+        <p>Pezzalotto è un software a scopo educativo e informativo, basato su analisi statistiche delle estrazioni storiche del Lotto. Non vi è alcuna garanzia di vincita e l'autore non è responsabile per eventuali perdite finanziarie. L'uso dell'app implica l'accettazione di questi termini.</p>
+        <button onclick="hideTerms()">Chiudi</button>
+    </div>
+    
+    <script>
+        function showTerms() {
+            document.getElementById('terms').style.display = 'block';
+        }
+        function hideTerms() {
+            document.getElementById('terms').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
