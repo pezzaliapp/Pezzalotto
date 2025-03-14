@@ -4,13 +4,13 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch("probability-data.json")
     .then(response => response.json())
     .then(data => {
-        let resultHTML = "<h2>Probabilità per Ruota</h2>";
+        let resultHTML = "<h2>Analisi Statistica dei Numeri</h2>";
         
-        Object.keys(data).forEach(ruota => {
-            resultHTML += `<h3>${ruota}</h3>`;
+        Object.keys(data).forEach(citta => {
+            resultHTML += `<h3>${citta}</h3>`;
             resultHTML += "<table border='1'><tr><th>Numero</th><th>Probabilità</th></tr>";
             
-            let sortedNumbers = Object.entries(data[ruota])
+            let sortedNumbers = Object.entries(data[citta])
                 .sort((a, b) => b[1] - a[1])
                 .slice(0, 5); // Prendiamo i 5 numeri con la probabilità più alta
             
@@ -27,22 +27,22 @@ document.addEventListener("DOMContentLoaded", () => {
         let today = new Date().toISOString().split("T")[0];
         let suggestedNumbers = [];
         
-        Object.keys(data).forEach(ruota => {
-            let topNumbers = Object.entries(data[ruota])
+        Object.keys(data).forEach(citta => {
+            let topNumbers = Object.entries(data[citta])
                 .sort((a, b) => b[1] - a[1])
-                .slice(0, 2); // Prendiamo i 2 numeri più frequenti per ogni ruota
+                .slice(0, 2); // Prendiamo i 2 numeri più frequenti per ogni città
             
-            suggestedNumbers.push({ ruota, numeri: topNumbers.map(n => n[0]) });
+            suggestedNumbers.push({ citta, numeri: topNumbers.map(n => n[0]) });
         });
         
-        let suggestionHTML = "<h2>Analisi Matematica per " + today + "</h2><ul>";
+        let suggestionHTML = "<h2>Distribuzione Numerica per " + today + "</h2><ul>";
         suggestedNumbers.forEach(suggestion => {
-            suggestionHTML += `<li><strong>${suggestion.ruota}:</strong> ${suggestion.numeri.join(", ")}</li>`;
+            suggestionHTML += `<li><strong>${suggestion.citta}:</strong> ${suggestion.numeri.join(", ")}</li>`;
         });
         suggestionHTML += "</ul>";
         
         // Messaggio di tutela e chiarimento
-        let disclaimer = "<p><strong>Nota:</strong> Questo programma utilizza dati statistici e algoritmi matematici per analizzare la distribuzione dei numeri nelle estrazioni passate. Non effettua previsioni né suggerisce scelte. L'obiettivo è esclusivamente didattico e formativo, dimostrando l'applicazione del calcolo delle probabilità nell'analisi dei dati. Qualsiasi interpretazione soggettiva o utilizzo per scopi diversi dall’analisi statistica non è responsabilità dell'autore.</p>";
+        let disclaimer = "<p><strong>Nota:</strong> Questo programma utilizza dati statistici e algoritmi matematici per analizzare la distribuzione dei numeri nel tempo. Non effettua previsioni né suggerisce scelte. L'obiettivo è esclusivamente didattico e formativo, dimostrando l'applicazione del calcolo delle probabilità nell'analisi dei dati. Qualsiasi interpretazione soggettiva o utilizzo per scopi diversi dall’analisi statistica non è responsabilità dell'autore. Pezzalotto è un'app gratuita e open source rilasciata sotto licenza MIT.</p>";
         
         // Pulsante per esportare i risultati in TXT via WhatsApp
         let exportButton = `<button onclick="sendWhatsApp()">Invia analisi via WhatsApp</button>`;
@@ -57,11 +57,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Funzione per generare il testo e inviarlo via WhatsApp
 function sendWhatsApp() {
-    let text = "Analisi Matematica di oggi:\n";
+    let text = "Distribuzione Numerica di oggi:\n";
     document.querySelectorAll("ul li").forEach(li => {
         text += li.innerText + "\n";
     });
-    text += "\nNota: Questa analisi è basata su dati statistici e algoritmi matematici e non rappresenta alcuna previsione.";
+    text += "\nNota: Questa analisi è basata su dati statistici e algoritmi matematici e non rappresenta alcuna previsione. Pezzalotto è un'app gratuita e open source rilasciata sotto licenza MIT.";
     
     let url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank");
